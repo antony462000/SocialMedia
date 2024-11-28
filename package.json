@@ -1,0 +1,25 @@
+{
+  "name": "socialmedia",
+  "version": "1.0.0",
+  "description": "socialmediaapp",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "Antony",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.11.4",
+    "nodemon": "^3.1.7",
+    "nodepath": "^0.0.1",
+    "pg": "^8.13.1",
+    "postgres": "^3.4.5",
+    "sequelize": "^6.37.5",
+    "uuid": "^11.0.3"
+  }
+}
