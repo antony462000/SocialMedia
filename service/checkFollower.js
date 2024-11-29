@@ -12,7 +12,6 @@ module.exports = async (myId, userId) => {
         return check.status
     }
     if (check.status == "ACCEPTED") {
-        console.log("JJJJJJJJJJJJ", check.status)
         return check.status
     }
 }

@@ -1,7 +1,6 @@
 const multer = require("multer")
 const path = require("node:path")
 module.exports = (req, res, next) => {
-    console.log("LLLLLLLLL", req)
     const data = req.body
     const storageConfig = multer.diskStorage({
         destination: path.join(__dirname, 'uploads'),
@@ -37,7 +36,6 @@ module.exports = (req, res, next) => {
         req['body'] = {}
         req['body'] = { ...data, url: req.file.path }
         
-        console.log("body", req.body, "+++")
         next()
     });
 

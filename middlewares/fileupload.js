@@ -1,8 +1,6 @@
 const multer = require("multer")
 const path = require("node:path")
 module.exports = (uploadType = "single", filename = "image", maxCount = 5) => {
-    console.log("LLLLLLLLL")
-
 
     const storageConfig = multer.diskStorage({
         destination: path.join(__dirname, 'uploads'),
@@ -30,7 +28,6 @@ module.exports = (uploadType = "single", filename = "image", maxCount = 5) => {
 
     return (req, res, next) => {
         const userId = req.body.userId
-        console.log("::::::::")
         const uploader = uploadType === "single"
             ? upload.single(filename)
             : upload.array('image', 5);
@@ -47,9 +44,7 @@ module.exports = (uploadType = "single", filename = "image", maxCount = 5) => {
 
                     return res.status(400).send({ message: "No file uploaded or invalid file type" });
                 }
-                console.log("oooooooo")
                 req.body = { ...req.body, url: req.file.path };
-                console.log("oooooooo", req.body)
             } else {
 
                 if (!req.files || req.files.length === 0) {
@@ -57,13 +52,7 @@ module.exports = (uploadType = "single", filename = "image", maxCount = 5) => {
                 }
 
                 req.body = { ...req.body, userId, urls: req.files.map((file) => file.path) };
-                console.log("IIIIIIIIIII")
             }
-
-            // req['body'] = {}
-            // req['body'] = { ...data, url: req.file.path }
-            // req.body = { ...req.body, url: req.file.path };
-            // console.log("body", req.body, "+++")
             next()
         });
     }
