@@ -1,16 +1,16 @@
 const { User, Post, Comment, PostImage } = require("../models")
-module.exports = async (userId) => {
+module.exports = async (userId, toFetchId) => {
     const details = await User.findOne({
         where: {
-            id: userId
+            id: toFetchId
         },
         attributes: {
             exclude: ["updatedAt", "createdAt", "deletedAt", "password", "type"],
         },
     })
 
-    const myPosts = await Post.findAll({
-        where: { userId: userId },
+    const Posts = await Post.findAll({
+        where: { userId: toFetchId },
         include: [
             {
                 model: PostImage,
@@ -24,8 +24,8 @@ module.exports = async (userId) => {
             }
         ]
     })
-   
 
 
-    return { details, myPosts }
+
+    return { details, Posts }
 }

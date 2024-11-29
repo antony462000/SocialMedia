@@ -6,9 +6,6 @@ module.exports = async (userId) => {
         },
     })
 
-    // for each user mapping to check private or not
-    // allUsers.map((user) => {
-    //     console.log(user.id)
-    // })
+   
     return allUsers
 }

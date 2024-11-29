@@ -1,6 +1,5 @@
 const { Post, PostImage, Follow, User, Comment } = require("../models")
 module.exports = async (userId, followingId) => {
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", userId, followingId)
     const publicPost = await Post.findAll({
         attributes: ["id", "caption", "likes"],
         include: [
@@ -32,7 +31,7 @@ module.exports = async (userId, followingId) => {
 
         order: [["createdAt", "DESC"]]
     })
-    console.log("::::::::::", publicPost, "&&&&&&&&&&&&&&")
+
     const privatePost = await Post.findAll({
         where: { userId: followingId },
 

@@ -7,7 +7,8 @@ module.exports = async (data) => {
         name: data.name,
         email: data.email,
         mobile: data.mob,
-        imagePath: data.url
+        imagePath: data.url,
+        privacy: data.privacy
     })
 
     return user

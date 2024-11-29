@@ -16,6 +16,7 @@ const signUp = require("./controller/signUp");
 const unFollowUser = require("./controller/unFollowUser");
 const unLike = require("./controller/unLike");
 const updateUser = require("./controller/updateUser");
+const viewUser = require("./controller/viewUser");
 const authentication = require("./middlewares/authentication");
 const fileupload = require("./middlewares/fileupload");
 const proPicUpdate = require("./middlewares/proPicUpdate");
@@ -40,5 +41,6 @@ router.get("/myFollowing", authentication, myFollowing)
 router.patch("/likepost", authentication, like)
 router.patch("/unlikepost", authentication, unLike)
 router.post("/addComment", authentication, addComment)
+router.get("/viewUser",authentication,viewUser)
 
 module.exports = router
