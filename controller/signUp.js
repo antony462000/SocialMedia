@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
         const userExists = await findByKey(req.body.mob, req.body.email)
         if (userExists) throw new Error("Email or mobile already exist");
         const createdUser = await signUp(req.body)
-        
+
         responder.success({ message: "Successfully Signedup", payload: createdUser })
     } catch (error) {
         console.log(error)
