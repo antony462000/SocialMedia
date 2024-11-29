@@ -35,7 +35,7 @@ module.exports = (uploadType = "single", filename = "image", maxCount = 5) => {
             ? upload.single(filename)
             : upload.array('image', 5);
 
-        
+
         uploader(req, res, function (err) {
             if (err) {
 
@@ -49,6 +49,7 @@ module.exports = (uploadType = "single", filename = "image", maxCount = 5) => {
                 }
                 console.log("oooooooo")
                 req.body = { ...req.body, url: req.file.path };
+                console.log("oooooooo", req.body)
             } else {
 
                 if (!req.files || req.files.length === 0) {

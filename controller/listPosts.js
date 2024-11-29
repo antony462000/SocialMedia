@@ -1,10 +1,14 @@
 
 const Responder = require("../responder")
 const listPosts = require("../service/listPosts")
+const myFollowing = require("../service/myFollowing")
 module.exports = async (req, res) => {
     const responder = new Responder(res)
     try {
-        const myFeed = await listPosts(req.body.userId.id)
+        const followingPosts = await myFollowing(req.body.userId.id)
+
+        const followingUsers = followingPosts.map((user) => user.Following.id)
+        const myFeed = await listPosts(req.body.userId.id, followingUsers)
         responder.success({ message: "My  Feed ", payload: myFeed })
     } catch (error) {
         console.log(error)

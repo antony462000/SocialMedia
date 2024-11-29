@@ -11,9 +11,17 @@ module.exports = (sequelize, DataTypes) => {
             }
             ),
                 Post.hasMany(models.PostImage, {
+                    foreignKey: "postId",
+                    as: "PostImages"
+                }),
+                Post.hasMany(models.Like, {
                     foreignKey: "id",
                     targetKey: "postId",
-                    as: "PostImages"
+                    as: "Likes"
+                }),
+                Post.hasMany(models.Comment, {
+                    foreignKey: "postId",
+                    as: "Comments"
                 })
         }
     }
