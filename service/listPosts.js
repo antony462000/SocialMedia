@@ -1,14 +1,29 @@
-const { Post, PostImage, Follow, User, Comment } = require("../models")
-module.exports = async (userId, followingId) => {
-    const publicPost = await Post.findAll({
-        attributes: ["id", "caption", "likes"],
-        include: [
+const { Op } = require("sequelize")
+const { Post, PostImage, User, Comment, sequelize } = require("../models")
+module.exports = async (userId, page = 1, pageSize = 5) => {
 
+
+    const offset = (page - 1) * pageSize;
+
+    const posts = await Post.findAll({
+        attributes: ["id", "caption", "likes", "userId", "createdAt"],
+        include: [
             {
                 model: User,
                 as: "User",
-                where: { privacy: false },
-                attributes: ["id", "name", "imagePath"]
+                attributes: ["name", "id", "imagePath"],
+                where: {
+                    [Op.or]: [
+                        { privacy: false },
+                        {
+                            id: {
+                                [Op.in]: sequelize.literal(
+                                    `(SELECT "followingId" FROM "follows" WHERE "followerId" = ${sequelize.escape(userId)} AND "status"= 'ACCEPTED')`
+                                )
+                            }
+                        }
+                    ]
+                }
             },
             {
                 model: PostImage,
@@ -26,47 +41,12 @@ module.exports = async (userId, followingId) => {
                         attributes: ["id", "name", "imagePath"]
                     },
                 ]
-            }
-        ],
+            }],
+        order: [["createdAt", "DESC"]],
+        limit: pageSize,
+        offset: offset
 
-        order: [["createdAt", "DESC"]]
     })
 
-    const privatePost = await Post.findAll({
-        where: { userId: followingId },
-
-
-        include: [
-            {
-                model: User,
-                as: "User",
-                where: { privacy: true },
-                attributes: ["id", "name", "imagePath"]
-            },
-            {
-                model: PostImage,
-                as: "PostImages",
-                attributes: ["postImagePath"]
-            },
-            {
-                model: Comment,
-                as: "Comments",
-                attributes: ["id", "comment"]
-            }
-        ],
-
-
-        order: [["createdAt", "DESC"]]
-    })
-
-    const alreadyPostsId = new Set();
-    const allPosts = [...publicPost, ...privatePost].filter((post) => {
-        if (alreadyPostsId.has(post.id)) {
-            return false;
-        }
-        alreadyPostsId.add(post.id);
-        return true;
-    });
-
-    return allPosts
+    return posts
 }
