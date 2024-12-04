@@ -44,7 +44,7 @@ module.exports = (uploadType = "single", filename = "image", maxCount = 5) => {
 
                     return res.status(400).send({ message: "No file uploaded or invalid file type" });
                 }
-                req.body = { ...req.body, url: req.file.path };
+                req.body = { ...req.body, userId, url: req.file.path };
             } else {
 
                 if (!req.files || req.files.length === 0) {

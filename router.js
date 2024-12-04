@@ -19,7 +19,6 @@ const updateUser = require("./controller/updateUser");
 const viewUser = require("./controller/viewUser");
 const authentication = require("./middlewares/authentication");
 const fileupload = require("./middlewares/fileupload");
-const proPicUpdate = require("./middlewares/proPicUpdate");
 
 const router = require("express").Router();
 
@@ -29,7 +28,7 @@ router.get("/myProfile", authentication, myProfile)
 router.get("/allUsers", authentication, allusers)
 router.patch("/updateuser", authentication, updateUser)
 router.post("/createpost", authentication, fileupload("multiple", "images", 10), createPost)
-router.patch("/updateProfilePic", authentication, proPicUpdate, profilePicUpdate)
+router.patch("/updateProfilePic", authentication, fileupload("single", "image"), profilePicUpdate)
 router.delete("/deletePost", authentication, deletePost)
 router.post("/followUser", authentication, followUser)
 router.delete("/unfollow", authentication, unFollowUser)
@@ -41,6 +40,6 @@ router.get("/myFollowing", authentication, myFollowing)
 router.patch("/likepost", authentication, like)
 router.patch("/unlikepost", authentication, unLike)
 router.post("/addComment", authentication, addComment)
-router.get("/viewUser",authentication,viewUser)
+router.get("/viewUser", authentication, viewUser)
 
 module.exports = router
