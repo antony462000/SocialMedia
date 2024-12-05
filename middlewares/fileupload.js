@@ -28,6 +28,7 @@ module.exports = (uploadType = "single", filename = "image", maxCount = 5) => {
 
     return (req, res, next) => {
         const userId = req.body.userId
+        console.log("________________", req)
         const uploader = uploadType === "single"
             ? upload.single(filename)
             : upload.array('image', 5);
@@ -44,6 +45,7 @@ module.exports = (uploadType = "single", filename = "image", maxCount = 5) => {
 
                     return res.status(400).send({ message: "No file uploaded or invalid file type" });
                 }
+                console.log("___________________________", req.file)
                 req.body = { ...req.body, userId, url: req.file.path };
             } else {
 
